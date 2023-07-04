@@ -20,5 +20,6 @@ from reschedule import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('events/', views.event_list)
+    path('events/', views.event_list),
+    path('events/<int:id>', views.event_detail)
 ]
