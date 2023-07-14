@@ -1,17 +1,19 @@
-import React from 'react';
+import React, {useState} from 'react';
 import CalendarHeader from './components/CalendarHeader';
 import Sidebar from './components/Sidebar';
 import CalendarGrid from './components/CalendarGrid';
 import { getMonth } from './util';
 
 export default function CalendarPage() {
+  let [currentMonth, setCurrentMonth] = useState(getMonth());
+  
   return (
     <div className='h-screen flex flex-columns'>
-        <CalendarHeader />
-        <div className='flex flex-1'>
-            <Sidebar />
-            <CalendarGrid />
-        </div>
+      <CalendarHeader />
+      <div className='flex flex-1'>
+        <Sidebar />
+        <CalendarGrid month={currentMonth} />
+      </div>
     </div>
   )
 }
