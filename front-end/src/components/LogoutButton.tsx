@@ -5,7 +5,7 @@ const LogoutButton = () => {
   const { logout } = useAuth0()
 
   return (
-    <button className="p-3 rounded-md m-3 bg-cyan-300 transition hover:bg-cyan-500 duration-500" onClick={() => logout()}>Logout</button>
+    <button className="p-3 mr-0 rounded-md bg-cyan-300 transition hover:bg-cyan-500 duration-500" onClick={() => logout()}>Logout</button>
   )
 }
 

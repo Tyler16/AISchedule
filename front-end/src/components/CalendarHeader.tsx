@@ -1,8 +1,10 @@
 import React from 'react'
+import LogoutButton from './LogoutButton'
 
 export default function CalendarHeader() {
   return (
-    <div>
-    </div>
+    <header className='px-4 py-2 flex items-center'>
+      <LogoutButton />
+    </header>
   )
 }
