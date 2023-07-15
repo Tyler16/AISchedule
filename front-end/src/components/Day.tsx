@@ -6,7 +6,7 @@ export default function Day({day, rowIdx}: any) {
       <header className="flex flex-col items-center">
         {rowIdx === 0 && (
           <p className="text-sm mt-1">
-            {day.format("ddd").toUpperCase()}
+            {day.format('ddd').toUpperCase()}
           </p>
         )}
         <p className="text-sm p-1 my-1 text-center">

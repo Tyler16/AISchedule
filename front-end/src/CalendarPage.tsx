@@ -6,14 +6,16 @@ import { getMonth } from './util';
 
 export default function CalendarPage() {
   let [currentMonth, setCurrentMonth] = useState(getMonth());
-  
+
   return (
-    <div className='h-screen flex flex-columns'>
-      <CalendarHeader />
-      <div className='flex flex-1'>
-        <Sidebar />
-        <CalendarGrid month={currentMonth} />
+    <React.Fragment>
+      <div className='h-screen flex flex-columns'>
+        <CalendarHeader />
+        <div className='flex flex-1'>
+          <Sidebar />
+          <CalendarGrid month={currentMonth} />
+        </div>
       </div>
-    </div>
+    </React.Fragment>
   )
 }
