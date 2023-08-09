@@ -1,10 +1,11 @@
-import React from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus, faUser } from '@fortawesome/free-solid-svg-icons'
+import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus, faUser } from '@fortawesome/free-solid-svg-icons';
+import Link from 'next/link';
 
 export default function TopBar() {
   return (
-    <div className="border-b-2 border-gray-200 h-16 flex flex-row align-center justify-center items-center">
+    <div className="h-16 flex flex-row align-center justify-center items-center border-b-2 border-gray-200">
       <div>
         <h1 className='text-cyan-400 text-xl'>Reschedule</h1>
       </div>
