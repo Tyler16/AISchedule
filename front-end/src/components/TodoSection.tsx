@@ -25,7 +25,7 @@ export default function TodoSection() {
       </div>
       <TodoList/>
       <div className='h-1/12'>
-        <button>Reschedule</button>
+        <button className='w-full h-full bg-cyan-300 text-white rounded-lg'>Reschedule</button>
       </div>
     </div>
   )
