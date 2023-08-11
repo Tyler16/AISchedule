@@ -6,7 +6,7 @@ export default function TopBar() {
   return (
     <div className="h-16 flex flex-row align-center justify-center items-center border-b-2 border-gray-200">
       <div>
-        <h1 className='text-cyan-400 text-xl'>Reschedule</h1>
+        <h1 className='text-cyan-400 text-xl'>AISchedule</h1>
       </div>
       <button className="m-auto h-12 p-3 bg-cyan-300 text-white rounded-md">
         <FontAwesomeIcon icon={faPlus}/>

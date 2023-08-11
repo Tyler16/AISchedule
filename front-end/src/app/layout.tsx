@@ -9,8 +9,8 @@ config.autoAddCss = false
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Reschedule',
-  description: 'The next scheduling application',
+  title: 'AISchedule',
+  description: 'The AI-powered scheduling application',
 }
 
 export default function RootLayout({
