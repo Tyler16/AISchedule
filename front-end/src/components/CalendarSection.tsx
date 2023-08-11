@@ -28,7 +28,11 @@ export default function CalendarSection() {
     }
 
     if (changed) {
-
+      setSchedulerData(schedulerData.map((appointment) =>
+          changed[appointment.id]
+            ? { ...appointment, ...changed[appointment.id] }
+            : appointment
+      ));
     }
 
     if (deleted !== undefined) {
