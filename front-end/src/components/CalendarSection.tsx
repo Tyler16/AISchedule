@@ -1,8 +1,8 @@
 'use client'
 
-import * as React from 'react';
+import React, { useState } from 'react';
 import Paper from '@mui/material/Paper';
-import { ViewState } from '@devexpress/dx-react-scheduler';
+import { ViewState, EditingState, IntegratedEditing } from '@devexpress/dx-react-scheduler';
 import {
   Scheduler,
   DayView,
@@ -13,27 +13,39 @@ import {
   TodayButton,
   ViewSwitcher,
   Appointments,
+  AppointmentTooltip,
+  AppointmentForm
 } from '@devexpress/dx-react-scheduler-material-ui';
 
-const currentDate = '2018-11-01';
-const schedulerData = [
-  { startDate: '2023-08-07T09:45', endDate: '2023-08-07T11:00', title: 'Meeting' },
-  { startDate: '2018-11-01T12:00', endDate: '2018-11-01T13:30', title: 'Go to a gym' },
-];
+export default function CalendarSection() {
+  let [schedulerData, setSchedulerData] = useState([
+    { startDate: '2023-08-10T09:45', endDate: '2023-08-10T11:00', title: 'Meeting' }
+  ]);
+  let commitChanges = ({ added, changed, deleted }: any) => {
+    console.log(added);
+    console.log(changed);
+    console.log(deleted);
+  }
+  
+  return (
+    <Paper>
+      <Scheduler data={schedulerData} height="638">
+        <ViewState/>
+        <EditingState onCommitChanges={commitChanges}/>
+        <IntegratedEditing />
+        <DayView startDayHour={0} endDayHour={24}/>
+        <WeekView startDayHour={0} endDayHour={24} />
+        <MonthView />
 
-export default () => (
-  <Paper>
-    <Scheduler data={schedulerData} height="638">
-      <ViewState/>
-      <DayView startDayHour={0} endDayHour={24}/>
-      <WeekView startDayHour={0} endDayHour={24} />
-      <MonthView />
-
-      <Toolbar />
-      <DateNavigator />
-      <TodayButton />
-      <ViewSwitcher />
-      <Appointments />
-    </Scheduler>
-  </Paper>
-);
+        <Toolbar />
+        <DateNavigator />
+        <TodayButton />
+        <ViewSwitcher />
+        
+        <Appointments />
+        <AppointmentTooltip showCloseButton showOpenButton showDeleteButton />
+        <AppointmentForm />
+      </Scheduler>
+    </Paper>
+  )
+};

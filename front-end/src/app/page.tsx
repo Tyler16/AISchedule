@@ -4,14 +4,12 @@ import TodoSection from '../components/TodoSection';
 
 export default function Home() {
   return (
-    <main>
-      <div className="flex flex-col">
-        <TopBar />
-        <div className='flex flex-row'>
-          <TodoSection />
-          <div className='w-2/3'>
-            <CalendarSection />
-          </div>
+    <main className="flex flex-col">
+      <TopBar />
+      <div className='flex flex-row'>
+        <TodoSection />
+        <div className='w-3/4'>
+          <CalendarSection />
         </div>
       </div>
     </main>

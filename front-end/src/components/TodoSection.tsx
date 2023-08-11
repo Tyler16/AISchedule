@@ -11,16 +11,17 @@ export default function TodoSection() {
   }
 
   return (
-    <div className='w-1/3 flex flex-col'>
+    <div className='w-1/4 flex flex-col'>
       <div className='h-1/6 w-full items-center border-b-2'>
         <h1 className='text-center mt-5 mb-3 text-lg'>To Do</h1>
         <div>
-          <ToggleButtons left="Today" right="All" returnFunc={getToggle}/>
+          <ToggleButtons left="All" right="Today" returnFunc={getToggle}/>
         </div>
       </div>
       <TodoList/>
-      <div className='h-1/12'>
-        <button className='w-full h-full bg-cyan-300 text-white rounded-lg'>Reschedule</button>
+      <div className='h-1/12 justify-center w-full'>
+        <button className='w-44 h-11 bg-cyan-300 text-white rounded-lg m-1 ml-3'>Add Item</button>
+        <button className='w-44 h-11 bg-cyan-300 text-white rounded-lg m-1'>Reschedule</button>
       </div>
     </div>
   )
