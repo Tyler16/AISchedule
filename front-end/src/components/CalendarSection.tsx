@@ -26,6 +26,14 @@ export default function CalendarSection() {
       const newId = schedulerData.length > 0 ? schedulerData[schedulerData.length - 1].id + 1 : 0;
       setSchedulerData([...schedulerData, {id: newId, ...added}]);
     }
+
+    if (changed) {
+
+    }
+
+    if (deleted !== undefined) {
+      setSchedulerData(schedulerData.filter((appointment) => appointment.id !== deleted));
+    }
   }
 
   return (
