@@ -17,10 +17,18 @@ import {
   AppointmentForm
 } from '@devexpress/dx-react-scheduler-material-ui';
 
+interface Event {
+  id: number;
+  title: string;
+  startDate: Date;
+  endDate: Date;
+  allDay: boolean;
+  rRule?: string;
+  notes?: string;
+};
+
 export default function CalendarSection() {
-  let [schedulerData, setSchedulerData] = useState([
-    { id: 0, startDate: '2023-08-10T09:45', endDate: '2023-08-10T11:00', title: 'Meeting' }
-  ]);
+  let [schedulerData, setSchedulerData] = useState<Event[]>([]);
   let commitChanges = ({ added, changed, deleted }: any) => {
     if (added) {
       const newId = schedulerData.length > 0 ? schedulerData[schedulerData.length - 1].id + 1 : 0;

@@ -7,7 +7,6 @@ export default function TodoSection() {
 
   const getToggle = (toggled: boolean) => {
     setToggleState(toggled);
-    console.log(toggleState)
   }
 
   return (
