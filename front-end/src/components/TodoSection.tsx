@@ -23,12 +23,15 @@ export default function TodoSection() {
       <TodoList todoItems={toggleState ? allTodoItems : dailyTodoItems}/>
 
       <div className='h-1/4 justify-center w-full'>
-        <div className='flex flex-row'>
-          <input placeholder="Title" className="m-2 border-2"/>
-          <input type="checkbox" className="w-4 text-cyan-300 bg-gray-100"/><label className="mt-3 ml-1">Has Due Date?</label>
-        </div>
-        <label className='ml-2'>Due Date:</label> <input type="date" className="m-2 border-2"/>
-        <div className="flex flex-row">
+        <input placeholder="Title" className="m-2 mb-1 border-2 w-90"/>
+        <label className='ml-2'>Due Date:</label> <input type="date" className="m-1 border-2"/>
+        <select className='border-2 bg-white h-6 w-32 ml-1'>
+          <option>Assignment</option>
+          <option>Test</option>
+          <option>Project</option>
+        </select>
+        <label className='m-2 mt-3'>Time Required(hours):</label><input type="number" min="1" className="w-20 border-2 mb-1 mt-1"/>
+        <div className="flex flex-row border-t-2">
           <button className='w-44 h-11 bg-cyan-300 text-white rounded-lg m-1 ml-3'>Add Item</button>
           <button className='w-44 h-11 bg-cyan-300 text-white rounded-lg m-1'>Reschedule</button>
         </div>
