@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import TodoList from './TodoList';
 import ToggleButtons from './ToggleButtons';
 
@@ -16,7 +16,6 @@ export default function TodoSection() {
   const [dailyTodoItems, setDailyItems] = useState([]);
 
   const getToggle = (toggled: boolean) => {
-    console.log(toggled)
     setToggleState(toggled);
   };
 
