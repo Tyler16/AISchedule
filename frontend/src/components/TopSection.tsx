@@ -1,6 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faUser } from '@fortawesome/free-solid-svg-icons';
+import LogoutButton from './LogoutButton';
 
 export default function TopSection() {
   return (
@@ -8,11 +9,7 @@ export default function TopSection() {
       <div>
         <h1 className='text-cyan-400 text-xl'>AutoSchedule</h1>
       </div>
-      <button className="m-auto h-12 p-3 bg-cyan-300 text-white rounded-md">
-        <FontAwesomeIcon icon={faPlus}/>
-        <span className='p-2'>New Event</span>
-      </button>
-      <button className='justify-self-end mr-2 bg-gray-200 w-12 h-12 rounded-full'><FontAwesomeIcon icon={faUser} className="fa-lg"/></button>
+      <LogoutButton/>
     </div>
   )
 }

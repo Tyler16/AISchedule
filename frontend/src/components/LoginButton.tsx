@@ -1,11 +1,11 @@
 import { useAuth0 } from '@auth0/auth0-react';
 
 export default function LoginButton() {
-    const { loginWithRedirect, isAuthenticated } = useAuth0();
+    const { loginWithRedirect } = useAuth0();
     return (
-      !isAuthenticated && (<button onClick={() => loginWithRedirect()}>
+      <button className='w-24 h-10 bg-cyan-300 text-white rounded-lg m-1 ml-3' onClick={() => loginWithRedirect()}>
         Login
-      </button>)
+      </button>
     )
   }
   
