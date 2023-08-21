@@ -1,8 +1,11 @@
 from django.http import JsonResponse
 from .models import Event, TodoItem
 from .serializers import EventSerializer
+from rest_framework.decorators import api_view
 
-def event_list(request):
-    events = Event.objects.all()
-    serializer = EventSerializer(events, many=True)
-    return JsonResponse({'Events': serializer.data}, safe=False)
+@api_view(['GET'])
+def event_list(request, query_uid):
+    if request.method == 'GET':
+        events = Event.objects.filter(uid=query_uid)
+        serializer = EventSerializer(events, many=True)
+        return JsonResponse({'Events': serializer.data}, safe=False)

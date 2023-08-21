@@ -20,5 +20,5 @@ from backend import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('events/', views.event_list)
+    path('event/<str:query_uid>', views.event_list)
 ]
