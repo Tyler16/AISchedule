@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Paper from '@mui/material/Paper';
 import { ViewState, EditingState, IntegratedEditing } from '@devexpress/dx-react-scheduler';
 import {
@@ -14,6 +14,7 @@ import {
   AppointmentTooltip,
   AppointmentForm
 } from '@devexpress/dx-react-scheduler-material-ui';
+import { useAuth0 } from '@auth0/auth0-react';
 
 interface Event {
   eventid: number;
@@ -27,10 +28,33 @@ interface Event {
 
 export default function CalendarSection() {
   let [schedulerData, setSchedulerData] = useState<Event[]>([]);
+  let { user } = useAuth0();
+  
+  useEffect(() => {
+    fetch(`http://localhost:8000/event/${user.sub}`).then((response) => response.json())
+    .then((data) => {
+       console.log(data);
+       setSchedulerData(data.Event)
+    });;
+  }, []);
+
+  const addEvent = async (body:any) => {
+    await fetch('http://localhost:8000/event/', {
+      method: 'POST',
+      body: JSON.stringify(body),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+    }).catch((err) => {
+      console.log(err.message);
+    });
+  };
+ 
   let commitChanges = ({ added, changed, deleted }: any) => {
     if (added) {
       const newId = schedulerData.length > 0 ? schedulerData[schedulerData.length - 1].eventid + 1 : 0;
-      setSchedulerData([...schedulerData, {id: newId, ...added}]);
+      setSchedulerData([...schedulerData, {eventid: newId, ...added}]);
+      addEvent({uid: user.sub, eventid: newId, ...added});
     }
 
     if (changed) {

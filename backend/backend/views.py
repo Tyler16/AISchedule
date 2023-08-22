@@ -18,7 +18,7 @@ def event_list(request, query_uid):
     if request.method == 'GET':
         events = Event.objects.filter(uid=query_uid)
         serializer = EventSerializer(events, many=True)
-        return JsonResponse({'Events': serializer.data}, safe=False)
+        return JsonResponse({'Event': serializer.data}, safe=False)
 
 @api_view(['PUT', 'DELETE'])
 def event_mod(request, query_uid, query_eventid):
