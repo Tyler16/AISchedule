@@ -23,8 +23,12 @@ def event_list(request, query_uid):
 @api_view(['PUT', 'DELETE'])
 def event_mod(request, query_uid, query_eventid):
     event = Event.objects.get(uid=query_uid, eventid=query_eventid)
-    serializer = EventNoIDSerializer(event, data=request.data)
-    if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    if request.method == 'PUT':
+        serializer = EventNoIDSerializer(event, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    if request.method == 'DELETE':
+        event.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
