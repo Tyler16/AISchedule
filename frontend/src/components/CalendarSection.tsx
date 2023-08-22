@@ -17,6 +17,7 @@ import {
 import { useAuth0 } from '@auth0/auth0-react';
 
 interface Event {
+  id:number;
   eventid: number;
   title: string;
   startDate: Date;
@@ -34,7 +35,8 @@ export default function CalendarSection() {
     fetch(`http://localhost:8000/event/${user.sub}`).then((response) => response.json())
     .then((data) => {
        console.log(data);
-       setSchedulerData(data.Event)
+       setSchedulerData(data.Event.map((appointment:any) =>
+       ({...appointment, id: appointment.eventid})))
     });;
   }, []);
 
@@ -49,11 +51,17 @@ export default function CalendarSection() {
       console.log(err.message);
     });
   };
- 
+
+  const deleteEvent = async (id:number) => {
+    await fetch(`http://localhost:8000/event/${user.sub}/${id}`, {
+      method: 'DELETE',
+    })
+  }
+
   let commitChanges = ({ added, changed, deleted }: any) => {
     if (added) {
       const newId = schedulerData.length > 0 ? schedulerData[schedulerData.length - 1].eventid + 1 : 0;
-      setSchedulerData([...schedulerData, {eventid: newId, ...added}]);
+      setSchedulerData([...schedulerData, {id: newId, eventid: newId, ...added}]);
       addEvent({uid: user.sub, eventid: newId, ...added});
     }
 
@@ -64,9 +72,10 @@ export default function CalendarSection() {
             : appointment
       ));
     }
-
+    console.log(deleted)
     if (deleted !== undefined) {
-      setSchedulerData(schedulerData.filter((appointment) => appointment.eventid !== deleted));
+      setSchedulerData(schedulerData.filter((appointment) => appointment.id !== deleted));
+      deleteEvent(deleted)
     }
   }
 
