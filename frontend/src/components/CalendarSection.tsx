@@ -18,7 +18,6 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 interface Event {
   id:number;
-  eventid: number;
   title: string;
   startDate: Date;
   endDate: Date;
@@ -32,12 +31,13 @@ export default function CalendarSection() {
   let { user } = useAuth0();
   
   useEffect(() => {
-    fetch(`http://localhost:8000/event/${user.sub}`).then((response) => response.json())
-    .then((data) => {
-       console.log(data);
-       setSchedulerData(data.Event.map((appointment:any) =>
-       ({...appointment, id: appointment.eventid})))
-    });;
+    fetch(`http://localhost:8000/event/${user.sub}`)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setSchedulerData(data.Event)
+      })
+      .catch((err) => console.log(err.message));
   }, []);
 
   const addEvent = async (body:any) => {
@@ -47,34 +47,65 @@ export default function CalendarSection() {
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
       },
-    }).catch((err) => {
+    })
+    .then((response) => response.json())
+    .then((data) => setSchedulerData([...schedulerData, data]))
+    .catch((err) => {
       console.log(err.message);
     });
   };
 
   const deleteEvent = async (id:number) => {
-    await fetch(`http://localhost:8000/event/${user.sub}/${id}`, {
+    await fetch(`http://localhost:8000/event/mod/${id}`, {
       method: 'DELETE',
     })
+    .then((response => {
+      if (response.status === 204) {
+        setSchedulerData(
+          schedulerData.filter((event) =>
+            event.id !== id
+          )
+        )
+      }
+    }))
+  }
+
+  const editEvent = async (id:number, body:any) => {
+    await fetch(`http://localhost:8000/event/mod/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(body),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+    })
+    .then((response) => response.json())
+    .then((data) => setSchedulerData((
+      schedulerData.map((event) =>
+        data.id === event.id
+          ? data
+          : event
+      )
+    )))
+    .catch((err) => {
+      console.log(err.message);
+    });
   }
 
   let commitChanges = ({ added, changed, deleted }: any) => {
     if (added) {
-      const newId = schedulerData.length > 0 ? schedulerData[schedulerData.length - 1].eventid + 1 : 0;
-      setSchedulerData([...schedulerData, {id: newId, eventid: newId, ...added}]);
-      addEvent({uid: user.sub, eventid: newId, ...added});
+      console.log(added)
+      addEvent({...added, uid: user.sub});
     }
 
     if (changed) {
-      setSchedulerData(schedulerData.map((appointment) =>
-          changed[appointment.eventid]
-            ? { ...appointment, ...changed[appointment.eventid] }
-            : appointment
-      ));
+      const modifiedId: number = parseInt(Object.keys(changed)[0])
+      editEvent(modifiedId, schedulerData.map((appointment) =>
+        changed[appointment.id]
+          ? { ...appointment, ...changed[appointment.id] }
+          : appointment
+      ).filter((appointment) => appointment.id == modifiedId)[0])
     }
-    console.log(deleted)
     if (deleted !== undefined) {
-      setSchedulerData(schedulerData.filter((appointment) => appointment.id !== deleted));
       deleteEvent(deleted)
     }
   }
@@ -85,8 +116,8 @@ export default function CalendarSection() {
         <ViewState/>
         <EditingState onCommitChanges={commitChanges}/>
         <IntegratedEditing />
-        <DayView startDayHour={0} endDayHour={24}/>
-        <WeekView startDayHour={0} endDayHour={24} />
+        <DayView startDayHour={0} endDayHour={24} cellDuration={60}/>
+        <WeekView startDayHour={0} endDayHour={24} cellDuration={60}/>
         <MonthView />
 
         <Toolbar />

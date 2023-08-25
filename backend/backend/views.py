@@ -1,6 +1,6 @@
 from django.http import JsonResponse
 from .models import Event, TodoItem
-from .serializers import EventSerializer, EventWithUIDSerializer, EventNoIDSerializer
+from .serializers import EventSerializer, EventNoIDSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
@@ -8,10 +8,10 @@ from rest_framework import status
 @api_view(['POST'])
 def event_create(request):
     if request.method == 'POST':
-        deserializer = EventWithUIDSerializer(data=request.data)
-        if deserializer.is_valid():
-            deserializer.save()
-            return Response(deserializer.data, status=status.HTTP_201_CREATED)
+        serializer = EventSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 @api_view(['GET'])
 def event_list(request, query_uid):
@@ -21,10 +21,10 @@ def event_list(request, query_uid):
         return JsonResponse({'Event': serializer.data}, safe=False)
 
 @api_view(['PUT', 'DELETE'])
-def event_mod(request, query_uid, query_eventid):
-    event = Event.objects.get(uid=query_uid, eventid=query_eventid)
+def event_mod(request, query_id):
+    event = Event.objects.get(pk=query_id)
     if request.method == 'PUT':
-        serializer = EventNoIDSerializer(event, data=request.data)
+        serializer = EventSerializer(event, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)

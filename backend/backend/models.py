@@ -2,7 +2,6 @@ from django.db import models
 
 class Event(models.Model):
     uid = models.CharField(max_length=128)
-    eventid = models.IntegerField()
     startDate = models.DateTimeField()
     endDate = models.DateTimeField()
     title = models.CharField(max_length=100)
@@ -12,7 +11,6 @@ class Event(models.Model):
 
 class TodoItem(models.Model):
     uid = models.CharField(max_length=128)
-    itemid = models.IntegerField()
     title = models.CharField(max_length=100)
     category = models.IntegerField()
     dueDate = models.DateTimeField()
