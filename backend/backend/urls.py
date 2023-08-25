@@ -22,5 +22,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('event/', views.event_create),
     path('event/<str:query_uid>', views.event_list),
-    path('event/mod/<int:query_id>', views.event_mod)
+    path('event/mod/<int:query_id>', views.event_mod),
+    path('todo/', views.todo_create),
+    path('todo/<str:query_uid>', views.todo_list),
+    path('todo/mod/<int:query_id>', views.todo_mod)
 ]

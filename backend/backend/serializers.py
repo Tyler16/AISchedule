@@ -6,7 +6,7 @@ class EventSerializer(serializers.ModelSerializer):
         model = Event
         fields = ['id', 'uid', 'startDate', 'endDate', 'title', 'allDay', 'rRule', 'notes']
 
-class EventNoIDSerializer(serializers.ModelSerializer):
+class TodoItemSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Event
-        fields = ['startDate', 'endDate', 'title', 'allDay', 'rRule', 'notes']
+        model = TodoItem
+        fields = ['id', 'uid', 'title', 'category', 'dueDate', 'totalTime']
