@@ -13,7 +13,8 @@ import {
   Appointments,
   AppointmentTooltip,
   AppointmentForm,
-  EditRecurrenceMenu
+  EditRecurrenceMenu,
+  CurrentTimeIndicator
 } from '@devexpress/dx-react-scheduler-material-ui';
 import { useAuth0 } from '@auth0/auth0-react';
 
@@ -133,6 +134,11 @@ export default function CalendarSection() {
         <Appointments />
         <AppointmentTooltip showCloseButton showOpenButton showDeleteButton />
         <AppointmentForm />
+        <CurrentTimeIndicator
+              shadePreviousCells={true}
+              shadePreviousAppointments={true}
+              updateInterval={10000}
+            />
       </Scheduler>
     </Paper>
   )
