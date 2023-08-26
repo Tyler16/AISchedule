@@ -49,10 +49,12 @@ export default function CalendarSection() {
       },
     })
     .then((response) => response.json())
-    .then((data) => setSchedulerData([...schedulerData, data]))
-    .catch((err) => {
+    .then((data) => {
+      setSchedulerData([...schedulerData, data])
+    }).catch((err) => {
       console.log(err.message);
     });
+    
   };
 
   const deleteEvent = async (id:number) => {
@@ -92,12 +94,14 @@ export default function CalendarSection() {
   }
 
   let commitChanges = ({ added, changed, deleted }: any) => {
+    console.log(added);
+    console.log(changed);
+    console.log(deleted);
+    const exDateError = changed != undefined && Object.keys(changed[Object.keys(changed)[0]])[0] == 'exDate';
     if (added) {
-      console.log(added)
       addEvent({...added, uid: user.sub});
     }
-
-    if (changed) {
+    if (changed && !exDateError) {
       const modifiedId: number = parseInt(Object.keys(changed)[0])
       editEvent(modifiedId, schedulerData.map((appointment) =>
         changed[appointment.id]
@@ -105,8 +109,8 @@ export default function CalendarSection() {
           : appointment
       ).filter((appointment) => appointment.id == modifiedId)[0])
     }
-    if (deleted !== undefined) {
-      deleteEvent(deleted)
+    if (deleted !== undefined || exDateError) {
+      deleteEvent(exDateError ? Object.keys(changed)[0] : deleted)
     }
   }
 
