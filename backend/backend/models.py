@@ -6,7 +6,8 @@ class Event(models.Model):
     endDate = models.DateTimeField()
     title = models.CharField(max_length=100)
     allDay = models.BooleanField()
-    rRule = models.CharField(max_length=50, null=True, blank=True)
+    rRule = models.CharField(max_length=200, null=True, blank=True)
+    exDate = models.CharField(max_length=200, null=True, blank=True)
     notes = models.CharField(max_length=200, null=True, blank=True)
 
 class TodoItem(models.Model):

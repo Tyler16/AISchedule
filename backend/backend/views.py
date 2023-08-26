@@ -14,7 +14,8 @@ def event_create(request):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-
+        else:
+            return Response(serializer.errors)
 # Return list of events by user
 @api_view(['GET'])
 def event_list(request, query_uid):
@@ -45,6 +46,8 @@ def todo_create(request):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.error)
 
 # Return todolist by uid
 @api_view(['GET'])
@@ -52,7 +55,7 @@ def todo_list(request, query_uid):
     if request.method == 'GET':
         todo_list = TodoItem.objects.filter(uid=query_uid)
         serializer = TodoItemSerializer(todo_list, many=True)
-        return JsonResponse({'Todo List': serializer.data})
+        return JsonResponse({'TodoList': serializer.data})
 
 # Delete todo item
 @api_view(['DELETE'])

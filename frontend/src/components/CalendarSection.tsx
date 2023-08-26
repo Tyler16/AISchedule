@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import Paper from '@mui/material/Paper';
-import { ViewState, EditingState, IntegratedEditing } from '@devexpress/dx-react-scheduler';
+import { ViewState, EditingState } from '@devexpress/dx-react-scheduler';
 import {
   Scheduler,
   DayView,
@@ -12,7 +12,8 @@ import {
   ViewSwitcher,
   Appointments,
   AppointmentTooltip,
-  AppointmentForm
+  AppointmentForm,
+  EditRecurrenceMenu
 } from '@devexpress/dx-react-scheduler-material-ui';
 import { useAuth0 } from '@auth0/auth0-react';
 
@@ -23,6 +24,7 @@ interface Event {
   endDate: Date;
   allDay: boolean;
   rRule?: string;
+  exDate?: string;
   notes?: string;
 };
 
@@ -97,11 +99,10 @@ export default function CalendarSection() {
     console.log(added);
     console.log(changed);
     console.log(deleted);
-    const exDateError = changed != undefined && Object.keys(changed[Object.keys(changed)[0]])[0] == 'exDate';
     if (added) {
       addEvent({...added, uid: user.sub});
     }
-    if (changed && !exDateError) {
+    if (changed) {
       const modifiedId: number = parseInt(Object.keys(changed)[0])
       editEvent(modifiedId, schedulerData.map((appointment) =>
         changed[appointment.id]
@@ -109,8 +110,8 @@ export default function CalendarSection() {
           : appointment
       ).filter((appointment) => appointment.id == modifiedId)[0])
     }
-    if (deleted !== undefined || exDateError) {
-      deleteEvent(exDateError ? Object.keys(changed)[0] : deleted)
+    if (deleted !== undefined) {
+      deleteEvent(deleted)
     }
   }
 
@@ -119,7 +120,7 @@ export default function CalendarSection() {
       <Scheduler data={schedulerData} height="638">
         <ViewState/>
         <EditingState onCommitChanges={commitChanges}/>
-        <IntegratedEditing />
+        <EditRecurrenceMenu />
         <DayView startDayHour={0} endDayHour={24} cellDuration={60}/>
         <WeekView startDayHour={0} endDayHour={24} cellDuration={60}/>
         <MonthView />
