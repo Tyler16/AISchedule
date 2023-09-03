@@ -31,10 +31,13 @@ export default function TodoSection() {
     setToggleState(toggled);
   };
 
+
   function handleSubmit(e:any) {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form)
+    console.log(formData);
+    //fetch('http://localhost:8000/todo/',  { method: form.method, body: formData });
   }
 
   return (
@@ -47,7 +50,7 @@ export default function TodoSection() {
       </div>
       <TodoList todoItems={toggleState ? allTodoItems : dailyTodoItems}/>
 
-      <form className='h-1/4 justify-center w-full' method='post'>
+      <form className='h-1/4 justify-center w-full' method='post' onSubmit={handleSubmit}>
         <div className='flex flex-row'>
           <input placeholder="Title" name="title" className="m-2 mb-1 border-2 w-90"/>
           <select className='border-2 bg-white h-7 w-26 ml-1 mt-2'>
