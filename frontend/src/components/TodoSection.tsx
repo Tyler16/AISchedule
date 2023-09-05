@@ -5,7 +5,8 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 interface ToDoItem {
   id: number;
-  name: string;
+  uid: string;
+  title: string;
   category: number;
   dueDate: Date;
   totalTime: number;
@@ -13,8 +14,8 @@ interface ToDoItem {
 
 export default function TodoSection() {
   let [toggleState, setToggleState] = useState(false);
-  let [allTodoItems, setAllItems] = useState([]);
-  let [dailyTodoItems, setDailyItems] = useState([]);
+  let [allTodoItems, setAllItems] = useState<ToDoItem[]>([]);
+  let [dailyTodoItems, setDailyItems] = useState<ToDoItem[]>([]);
   let { user } = useAuth0();
 
   useEffect(() => {
@@ -31,13 +32,23 @@ export default function TodoSection() {
     setToggleState(toggled);
   };
 
-
   function handleSubmit(e:any) {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form)
-    console.log(formData);
-    //fetch('http://localhost:8000/todo/',  { method: form.method, body: formData });
+    const convertedObj = {...Object.fromEntries(formData.entries()), uid: user.sub}
+    console.log(convertedObj);
+    fetch('http://localhost:8000/todo/', { method: form.method,
+                                           body: JSON.stringify(convertedObj),
+                                           headers: {
+                                            'Content-type': 'application/json; charset=UTF-8',
+                                           }})
+    .then((response) => response.json())
+    .then((data) => {
+      setAllItems([...allTodoItems, data])
+    }).catch((err) => {
+      console.log(err.message);
+    });
   }
 
   return (
@@ -50,13 +61,13 @@ export default function TodoSection() {
       </div>
       <TodoList todoItems={toggleState ? allTodoItems : dailyTodoItems}/>
 
-      <form className='h-1/4 justify-center w-full' method='post' onSubmit={handleSubmit}>
+      <form className='h-1/4 justify-center w-full' method='POST' onSubmit={handleSubmit}>
         <div className='flex flex-row'>
           <input placeholder="Title" name="title" className="m-2 mb-1 border-2 w-90"/>
-          <select className='border-2 bg-white h-7 w-26 ml-1 mt-2'>
-            <option>Assignment</option>
-            <option>Test</option>
-            <option>Project</option>
+          <select name="category" defaultValue="assignment" className='border-2 bg-white h-7 w-26 ml-1 mt-2'>
+            <option value="assignment">Assignment</option>
+            <option value="assignment">Test</option>
+            <option value="assignment">Project</option>
           </select>
         </div>
 

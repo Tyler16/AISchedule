@@ -13,6 +13,6 @@ class Event(models.Model):
 class TodoItem(models.Model):
     uid = models.CharField(max_length=128)
     title = models.CharField(max_length=100)
-    category = models.IntegerField()
+    category = models.CharField(max_length=10)
     dueDate = models.DateTimeField()
     totalTime = models.IntegerField()

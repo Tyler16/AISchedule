@@ -47,6 +47,7 @@ def todo_create(request):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
+            print(serializer.error)
             return Response(serializer.error)
 
 # Return todolist by uid
