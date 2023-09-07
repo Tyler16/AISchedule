@@ -1,4 +1,5 @@
 import React from 'react'
+import TodoItem from './TodoItem';
 
 interface ToDoItem {
   id: number;
@@ -10,10 +11,9 @@ interface ToDoItem {
 };
 
 export default function TodoList(props: {todoItems: ToDoItem[]}) {
-  console.log(props.todoItems.map((item: ToDoItem) => item.title))
   return (
-    <div className="w-full border-b-2 h-7/12 overflow-auto">
-      {props.todoItems.map((item: ToDoItem) => <div key={item.id}>{item.title}</div>)}
+    <div className="w-full border-b-2 h-3/4 overflow-auto">
+      {props.todoItems.map((item: ToDoItem) => <TodoItem item={item} key={item.id}/>)}
     </div>
   )
 }

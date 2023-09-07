@@ -118,7 +118,7 @@ export default function CalendarSection() {
 
   return (
     <Paper>
-      <Scheduler data={schedulerData} height="638">
+      <Scheduler data={schedulerData} height="654">
         <ViewState/>
         <EditingState onCommitChanges={commitChanges}/>
         <EditRecurrenceMenu />

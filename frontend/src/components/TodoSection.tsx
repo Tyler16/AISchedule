@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import TodoList from './TodoList';
-import ToggleButtons from './ToggleButtons';
 import { useAuth0 } from '@auth0/auth0-react';
 
 interface ToDoItem {
@@ -13,7 +12,6 @@ interface ToDoItem {
 };
 
 export default function TodoSection() {
-  let [toggleState, setToggleState] = useState(false);
   let [allTodoItems, setAllItems] = useState<ToDoItem[]>([]);
   let [dailyTodoItems, setDailyItems] = useState<ToDoItem[]>([]);
   let { user } = useAuth0();
@@ -28,9 +26,6 @@ export default function TodoSection() {
       .catch((err) => console.log(err.message));
   }, []);
 
-  const getToggle = (toggled: boolean) => {
-    setToggleState(toggled);
-  };
 
   function handleSubmit(e:any) {
     e.preventDefault();
@@ -52,16 +47,13 @@ export default function TodoSection() {
   }
 
   return (
-    <div className='w-1/4 flex flex-col'>
-      <div className='h-1/6 w-full items-center border-b-2'>
+    <div className='w-1/4 flex flex-col overflow-auto mb-0'>
+      <div className='h-1/8 w-full items-center border-b-2'>
         <h1 className='text-center mt-5 mb-3 text-lg'>To Do</h1>
-        <div>
-          <ToggleButtons left="All" right="Today" returnFunc={getToggle}/>
-        </div>
       </div>
-      <TodoList todoItems={toggleState ? allTodoItems : dailyTodoItems}/>
+      <TodoList todoItems={allTodoItems}/>
 
-      <form className='h-1/4 justify-center w-full' method='POST' onSubmit={handleSubmit}>
+      <form className='h-1/4 justify-center w-full border-b-2 pb-0' method='POST' onSubmit={handleSubmit}>
         <div className='flex flex-row'>
           <input placeholder="Title" name="title" className="m-2 mb-1 border-2 w-90"/>
           <select name="category" defaultValue="assignment" className='border-2 bg-white h-7 w-26 ml-1 mt-2'>
@@ -77,7 +69,7 @@ export default function TodoSection() {
         </div>
       
         <label className='m-2 mt-3'>Time Required(hours):</label><input type="number" name="totalTime" min="1" className="w-20 border-2 mb-1 mt-1"/>
-        <div className="flex flex-row border-t-2">
+        <div className="flex flex-row border-t-2 pb-0 p-0">
           <button className='w-44 h-10 bg-cyan-300 text-white rounded-lg m-1 ml-3' type="submit">Add Item</button>
           <button className='w-44 h-10 bg-cyan-300 text-white rounded-lg m-1' type="button">Reschedule</button>
         </div>

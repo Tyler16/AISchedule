@@ -4,7 +4,7 @@ import TodoSection from './components/TodoSection';
 
 export default function SchedulerPage() {
   return (
-    <div className="flex flex-col font-sans">
+    <div className="flex flex-col font-sans overflow-auto">
       <TopSection />
       <div className='flex flex-row'>
         <TodoSection />
