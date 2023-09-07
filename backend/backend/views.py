@@ -61,7 +61,7 @@ def todo_list(request, query_uid):
 # Delete todo item
 @api_view(['DELETE'])
 def todo_mod(request, query_id):
-    event = Event.objects.get(pk=query_id)
+    item = TodoItem.objects.get(pk=query_id)
     if request.method == 'DELETE':
-        event.delete()
+        item.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)

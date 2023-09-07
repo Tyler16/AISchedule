@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import TodoList from './TodoList';
+import TodoList from './todo/TodoList';
+import TodoBar from './todo/TodoBar';
 import { useAuth0 } from '@auth0/auth0-react';
 
 interface ToDoItem {
@@ -13,7 +14,6 @@ interface ToDoItem {
 
 export default function TodoSection() {
   let [allTodoItems, setAllItems] = useState<ToDoItem[]>([]);
-  let [dailyTodoItems, setDailyItems] = useState<ToDoItem[]>([]);
   let { user } = useAuth0();
 
   useEffect(() => {
@@ -26,6 +26,20 @@ export default function TodoSection() {
       .catch((err) => console.log(err.message));
   }, []);
 
+  async function deleteEvent(id:number) {
+    await fetch(`http://localhost:8000/todo/mod/${id}`, {
+      method: 'DELETE',
+    })
+    .then((response => {
+      if (response.status === 204) {
+        setAllItems(
+          allTodoItems.filter((item) =>
+            item.id !== id
+          )
+        )
+      }
+    }))
+  }
 
   function handleSubmit(e:any) {
     e.preventDefault();
@@ -48,18 +62,16 @@ export default function TodoSection() {
 
   return (
     <div className='w-1/4 flex flex-col overflow-auto mb-0'>
-      <div className='h-1/8 w-full items-center border-b-2'>
-        <h1 className='text-center mt-5 mb-3 text-lg'>To Do</h1>
-      </div>
-      <TodoList todoItems={allTodoItems}/>
+      <TodoBar/>
+      <TodoList todoItems={allTodoItems} deleteFunction={deleteEvent}/>
 
       <form className='h-1/4 justify-center w-full border-b-2 pb-0' method='POST' onSubmit={handleSubmit}>
         <div className='flex flex-row'>
           <input placeholder="Title" name="title" className="m-2 mb-1 border-2 w-90"/>
           <select name="category" defaultValue="assignment" className='border-2 bg-white h-7 w-26 ml-1 mt-2'>
             <option value="assignment">Assignment</option>
-            <option value="assignment">Test</option>
-            <option value="assignment">Project</option>
+            <option value="test">Test</option>
+            <option value="project">Project</option>
           </select>
         </div>
 
