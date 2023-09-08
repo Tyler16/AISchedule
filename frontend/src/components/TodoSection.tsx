@@ -2,15 +2,7 @@ import { useState, useEffect } from 'react';
 import TodoList from './todo/TodoList';
 import TodoBar from './todo/TodoBar';
 import { useAuth0 } from '@auth0/auth0-react';
-
-interface ToDoItem {
-  id: number;
-  uid: string;
-  title: string;
-  category: number;
-  dueDate: Date;
-  totalTime: number;
-};
+import { ToDoItem } from './types';
 
 export default function TodoSection() {
   let [allTodoItems, setAllItems] = useState<ToDoItem[]>([]);

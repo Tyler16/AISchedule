@@ -17,17 +17,7 @@ import {
   CurrentTimeIndicator
 } from '@devexpress/dx-react-scheduler-material-ui';
 import { useAuth0 } from '@auth0/auth0-react';
-
-interface Event {
-  id:number;
-  title: string;
-  startDate: Date;
-  endDate: Date;
-  allDay: boolean;
-  rRule?: string;
-  exDate?: string;
-  notes?: string;
-};
+import { Event } from './types';
 
 export default function CalendarSection() {
   let [schedulerData, setSchedulerData] = useState<Event[]>([]);

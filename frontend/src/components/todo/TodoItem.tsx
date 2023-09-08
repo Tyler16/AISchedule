@@ -1,13 +1,6 @@
-interface ToDoItem {
-  id: number;
-  uid: string;
-  title: string;
-  category: number;
-  dueDate: Date;
-  totalTime: number;
-};
+import { TodoItemProps } from '../types';
 
-export default function TodoItem(props: {item: ToDoItem, deleteFunction: Function}) {
+export default function TodoItem(props: TodoItemProps) {
   return (
     <div className="flex flex-row">
       <input type="checkbox" className="m-2 w-4 h-4" onChange={() => props.deleteFunction(props.item.id)}/>

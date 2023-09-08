@@ -1,15 +1,8 @@
 import TodoItem from './TodoItem';
+import { ToDoItem, TodoListProps } from '../types';
 
-interface ToDoItem {
-  id: number;
-  uid: string;
-  title: string;
-  category: number;
-  dueDate: Date;
-  totalTime: number;
-};
 
-export default function TodoList(props: {todoItems: ToDoItem[], deleteFunction: Function}) {
+export default function TodoList(props: TodoListProps) {
   return (
     <div className="w-full border-b-2 h-3/4 overflow-auto">
       {props.todoItems.map((item: ToDoItem) => <TodoItem item={item} key={item.id} deleteFunction={props.deleteFunction}/>)}
