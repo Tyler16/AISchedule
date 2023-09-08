@@ -17,6 +17,9 @@ export default function TodoSection() {
   let { user } = useAuth0();
 
   useEffect(() => {
+    if (user === undefined) {
+      return;
+    }
     fetch(`http://localhost:8000/todo/${user.sub}`)
       .then((response) => response.json())
       .then((data) => {
@@ -42,11 +45,13 @@ export default function TodoSection() {
   }
 
   function handleSubmit(e:any) {
+    if (user === undefined) {
+      return;
+    }
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form)
     const convertedObj = {...Object.fromEntries(formData.entries()), uid: user.sub}
-    console.log(convertedObj);
     fetch('http://localhost:8000/todo/', { method: form.method,
                                            body: JSON.stringify(convertedObj),
                                            headers: {

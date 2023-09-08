@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import Paper from '@mui/material/Paper';
-import { ViewState, EditingState } from '@devexpress/dx-react-scheduler';
+import { ViewState, EditingState } from '@devexpress/dx-react-scheduler'
 import {
   Scheduler,
   DayView,
@@ -34,10 +34,12 @@ export default function CalendarSection() {
   let { user } = useAuth0();
   
   useEffect(() => {
+    if (user === undefined) {
+      return;
+    }
     fetch(`http://localhost:8000/event/${user.sub}`)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setSchedulerData(data.Event)
       })
       .catch((err) => console.log(err.message));
@@ -97,9 +99,9 @@ export default function CalendarSection() {
   }
 
   let commitChanges = ({ added, changed, deleted }: any) => {
-    console.log(added);
-    console.log(changed);
-    console.log(deleted);
+    if (user === undefined) {
+      return;
+    }
     if (added) {
       addEvent({...added, uid: user.sub});
     }

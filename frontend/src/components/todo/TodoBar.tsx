@@ -1,5 +1,3 @@
-import React from 'react'
-
 export default function TodoBar() {
   return (
     <div className='h-1/8 w-full items-center border-b-2'>
