@@ -4,7 +4,7 @@ from .models import Event, TodoItem
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
-        fields = ['id', 'uid', 'startDate', 'endDate', 'title', 'allDay', 'rRule', 'exDate', 'notes']
+        fields = ['id', 'uid', 'startDate', 'endDate', 'title', 'allDay', 'rRule', 'exDate', 'notes', 'autoScheduled']
 
 class TodoItemSerializer(serializers.ModelSerializer):
     class Meta:

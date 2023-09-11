@@ -9,6 +9,8 @@ class Event(models.Model):
     rRule = models.CharField(max_length=200, null=True, blank=True)
     exDate = models.CharField(max_length=200, null=True, blank=True)
     notes = models.CharField(max_length=200, null=True, blank=True)
+    autoScheduled = models.BooleanField(default=False)
+    todoID = models.IntegerField(null=True, blank=True)
 
 class TodoItem(models.Model):
     uid = models.CharField(max_length=128)
@@ -16,3 +18,4 @@ class TodoItem(models.Model):
     category = models.CharField(max_length=10)
     dueDate = models.DateTimeField()
     totalTime = models.IntegerField()
+    timeLeft = models.IntegerField()
