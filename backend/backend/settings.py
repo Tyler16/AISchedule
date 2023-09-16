@@ -129,4 +129,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5173",
     "http://localhost:5173",
+    "https://auto-schedule.vercel.app"
 ]
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'neondb',
+        'USER': 'Tyler16',
+        'PASSWORD': '2VJT0FgvYQMD',
+        'HOST': 'ep-square-butterfly-41945547.us-east-2.aws.neon.tech',
+        'PORT': '5432',
+    }
+}
