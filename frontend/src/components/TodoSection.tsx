@@ -43,7 +43,7 @@ export default function TodoSection() {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form)
-    const convertedObj = {...Object.fromEntries(formData.entries()), uid: user.sub}
+    const convertedObj = {...Object.fromEntries(formData.entries()), uid: user.sub, timeLeft: formData}
     fetch('http://localhost:8000/todo/', { method: form.method,
                                            body: JSON.stringify(convertedObj),
                                            headers: {

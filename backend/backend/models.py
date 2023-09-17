@@ -19,3 +19,7 @@ class TodoItem(models.Model):
     dueDate = models.DateTimeField()
     totalTime = models.IntegerField()
     timeLeft = models.IntegerField()
+    def save(self, *args, **kwargs):
+        if not self.timeLeft:
+            self.timeLeft = self.totalTime
+        super(TodoItem, self).save(*args, **kwargs)
