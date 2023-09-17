@@ -26,5 +26,4 @@ urlpatterns = [
     path('todo/', views.todo_create),
     path('todo/<str:query_uid>', views.todo_list),
     path('todo/mod/<int:query_id>', views.todo_mod),
-    path('autoschedule/<str:query_uid>', views.autoschedule)
 ]

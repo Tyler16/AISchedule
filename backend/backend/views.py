@@ -66,32 +66,3 @@ def todo_mod(request, query_id):
     if request.method == 'DELETE':
         item.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
-@api_view(['GET'])
-def autoschedule(request, query_uid):
-    now = timezone.now()
-    items = TodoItem.objects.filter(uid=query_uid, dueDate__gte=now)
-    prevEvents = Event.objects.filter(uid=query_uid, autoScheduled=True, endDate__gte=now)
-    todayEvents = Event.objects.filter(uid=query_uid, startDate__gte=now, endDate__lte=now.replace(hour=23, minute=59, second=59))
-    if request.method == 'GET':
-        for event in prevEvents:
-            try:
-                modifiedItem = TodoItem.objects.get(pk=event.todoID)
-                modifiedItem.timeLeft += 1
-                modifiedItem.save()
-            except TodoItem.DoesNotExist:
-                continue
-            
-        prevEvents.delete()
-        
-
-        time_scores_heap = []
-        for item in items:
-            time_diff = item.dueDate - now
-            days, seconds = time_diff.days - time_diff.seconds
-            hour_diff = days * 24 + seconds // 3600
-            if hour_diff <= 0:
-                continue
-            time_scores_heap.append((item.timeLeft / (hour_diff), item))
-        heapq.heapify()
-        return Response(status=status.HTTP_204_NO_CONTENT)
