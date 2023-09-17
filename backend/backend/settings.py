@@ -10,11 +10,13 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+from dotenv import load_dotenv
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+load_dotenv()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -135,10 +137,12 @@ CORS_ALLOWED_ORIGINS = [
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'neondb',
-        'USER': 'Tyler16',
-        'PASSWORD': '2VJT0FgvYQMD',
-        'HOST': 'ep-square-butterfly-41945547.us-east-2.aws.neon.tech',
-        'PORT': '5432',
+        'NAME': os.getenv("PG_NAME"),
+        'USER': os.getenv("PG_USER"),
+        'PASSWORD': os.getenv("PG_PASSWORD"),
+        'HOST': os.getenv("PG_HOST"),
+        'PORT': os.getenv("PG_PORT"),
     }
 }
+
+CONN_MAX_AGE=0
