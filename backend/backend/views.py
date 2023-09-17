@@ -60,9 +60,15 @@ def todo_list(request, query_uid):
         return JsonResponse({'TodoList': serializer.data})
 
 # Delete todo item
-@api_view(['DELETE'])
+@api_view(['PUT', 'DELETE'])
 def todo_mod(request, query_id):
     item = TodoItem.objects.get(pk=query_id)
+    if request.method == 'PUT':
+        serializer = TodoItemSerializer(item, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     if request.method == 'DELETE':
         item.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
