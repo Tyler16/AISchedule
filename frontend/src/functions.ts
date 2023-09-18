@@ -1,5 +1,5 @@
 import { ToDoItem, Event } from "./components/types";
-
+/*
 class Heap {
   private heap: any[];
   private sortFunction: Function;
@@ -24,7 +24,7 @@ class Heap {
 
 function compareItems(item1: ToDoItem, item2: ToDoItem) {
 
-}
+}*/
 
 export function autoSchedule(events: Event[], todoItems: ToDoItem[]) {
   let today = new Date();

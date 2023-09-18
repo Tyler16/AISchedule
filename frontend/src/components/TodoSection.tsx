@@ -40,7 +40,7 @@ export default function TodoSection(props: TodoSectionProps) {
         <label className='m-2 mt-3'>Time Required(hours):</label><input type="number" name="totalTime" min="1" className="w-20 border-2 mb-1 mt-1"/>
         <div className="flex flex-row border-t-2 pb-0 p-0">
           <button className='w-44 h-10 bg-cyan-300 text-white rounded-lg m-1 ml-3 transition duration-300 hover:bg-cyan-400' type="submit">Add Item</button>
-          <button className='w-44 h-10 bg-cyan-300 text-white rounded-lg m-1 transition duration-300 hover:bg-cyan-400' type="button" onClick={() => props.autoScheduleFunction()}>Reschedule</button>
+          <button className='w-44 h-10 bg-cyan-300 text-white rounded-lg m-1 transition duration-300 hover:bg-cyan-400' type="button" onClick={() => props.autoScheduleFunction()}>AutoSchedule</button>
         </div>
       </form>
     </div>
