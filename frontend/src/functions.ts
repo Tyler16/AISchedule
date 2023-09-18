@@ -1,3 +1,5 @@
+import { ToDoItem, Event } from "./components/types";
+
 class Heap {
   private heap: any[];
   private sortFunction: Function;
@@ -18,4 +20,8 @@ class Heap {
   public heappush() {
 
   }
+}
+
+export function autoSchedule(events: Event[], todoItems: ToDoItem[]) {
+  
 }

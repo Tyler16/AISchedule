@@ -27,6 +27,7 @@ export default function SchedulerPage() {
         setSchedulerData(data.Event)
       })
       .catch((err) => console.log(err.message));
+      
   }, []);
 
   async function deleteItem(id:number) {
@@ -92,6 +93,7 @@ export default function SchedulerPage() {
   }
 
   const editEvent = async (id:number, body:any) => {
+    console.log(schedulerData);
     await fetch(`http://localhost:8000/event/mod/${id}`, {
       method: 'PUT',
       body: JSON.stringify(body),
@@ -113,7 +115,7 @@ export default function SchedulerPage() {
   }
 
   return (
-    <div className="flex flex-col font-sans h-screen">
+    <div className="flex flex-col font-sans h-screen w-screen">
       <TopSection />
       <div className='flex flex-row h-11/12 mb-0'>
         <TodoSection todoItems={todoItems} deleteFunction={deleteItem} addFunction={addItem}/>

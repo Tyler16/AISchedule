@@ -1,6 +1,6 @@
 export default function TodoBar() {
   return (
-    <div className='h-1/8 w-full items-center border-b-2'>
+    <div className='h-1/8 w-full items-center border-b-2 text-sky-500'>
       <h1 className='text-center mt-5 mb-3 text-lg'>To Do</h1>
     </div>
   )
