@@ -5,7 +5,6 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from django.utils import timezone
-import heapq
 
 # Add new events
 @api_view(['POST'])
