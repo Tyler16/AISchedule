@@ -116,8 +116,6 @@ export default function SchedulerPage() {
   }
 
   function autoscheduleClicked() {
-    let today = new Date();
-    console.log("Test test");
     autoSchedule(schedulerData, todoItems);
   }
 
