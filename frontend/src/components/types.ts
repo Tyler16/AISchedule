@@ -5,6 +5,7 @@ export interface ToDoItem {
   category: number;
   dueDate: Date;
   totalTime: number;
+  timeLeft?: number;
 };
 
 export interface Event {
@@ -19,11 +20,24 @@ export interface Event {
 };
 
 export interface TodoItemProps {
-  item: ToDoItem,
-  deleteFunction: Function
+  item: ToDoItem;
+  deleteFunction: Function;
 }
 
 export interface TodoListProps {
-  todoItems: ToDoItem[],
-  deleteFunction: Function
+  todoItems: ToDoItem[];
+  deleteFunction: Function;
+}
+
+export interface TodoSectionProps {
+  todoItems: ToDoItem[];
+  deleteFunction: Function;
+  addFunction: Function;
+}
+
+export interface CalendarSectionProps {
+  events: Event[];
+  deleteFunction: Function;
+  addFunction: Function;
+  editFunction: Function;
 }

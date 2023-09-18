@@ -1,40 +1,10 @@
-import { useState, useEffect } from 'react';
 import TodoList from './todo/TodoList';
 import TodoBar from './todo/TodoBar';
 import { useAuth0 } from '@auth0/auth0-react';
-import { ToDoItem } from './types';
+import {  TodoSectionProps } from './types';
 
-export default function TodoSection() {
-  let [allTodoItems, setAllItems] = useState<ToDoItem[]>([]);
+export default function TodoSection(props: TodoSectionProps) {
   let { user } = useAuth0();
-
-  useEffect(() => {
-    if (user === undefined) {
-      return;
-    }
-    fetch(`http://localhost:8000/todo/${user.sub}`)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        setAllItems(data.TodoList);
-      })
-      .catch((err) => console.log(err.message));
-  }, []);
-
-  async function deleteEvent(id:number) {
-    await fetch(`http://localhost:8000/todo/mod/${id}`, {
-      method: 'DELETE',
-    })
-    .then((response => {
-      if (response.status === 204) {
-        setAllItems(
-          allTodoItems.filter((item) =>
-            item.id !== id
-          )
-        )
-      }
-    }))
-  }
 
   function handleSubmit(e:any) {
     if (user === undefined) {
@@ -43,24 +13,14 @@ export default function TodoSection() {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form)
-    const convertedObj = {...Object.fromEntries(formData.entries()), uid: user.sub, timeLeft: formData}
-    fetch('http://localhost:8000/todo/', { method: form.method,
-                                           body: JSON.stringify(convertedObj),
-                                           headers: {
-                                            'Content-type': 'application/json; charset=UTF-8',
-                                           }})
-    .then((response) => response.json())
-    .then((data) => {
-      setAllItems([...allTodoItems, data])
-    }).catch((err) => {
-      console.log(err.message);
-    });
+    const convertedObj = {...Object.fromEntries(formData.entries()), uid: user.sub}
+    props.addFunction(convertedObj)
   }
 
   return (
     <div className='w-1/4 flex flex-col overflow-auto mb-0'>
       <TodoBar/>
-      <TodoList todoItems={allTodoItems} deleteFunction={deleteEvent}/>
+      <TodoList todoItems={props.todoItems} deleteFunction={props.deleteFunction}/>
 
       <form className='h-1/4 justify-center w-full border-b-2 pb-0' method='POST' onSubmit={handleSubmit}>
         <div className='flex flex-row'>
