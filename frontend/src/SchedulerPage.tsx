@@ -4,6 +4,7 @@ import TodoSection from './components/TodoSection';
 import { useEffect, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { ToDoItem, Event } from './components/types';
+import { autoSchedule } from './functions';
 
 export default function SchedulerPage() {
   let [todoItems, setTodoItems] = useState<ToDoItem[]>([]);
@@ -114,11 +115,17 @@ export default function SchedulerPage() {
     });
   }
 
+  function autoscheduleClicked() {
+    let today = new Date();
+    console.log("Test test");
+    autoSchedule(schedulerData, todoItems);
+  }
+
   return (
     <div className="flex flex-col font-sans h-screen w-screen">
       <TopSection />
       <div className='flex flex-row h-11/12 mb-0'>
-        <TodoSection todoItems={todoItems} deleteFunction={deleteItem} addFunction={addItem}/>
+        <TodoSection todoItems={todoItems} deleteFunction={deleteItem} addFunction={addItem} autoScheduleFunction={autoscheduleClicked}/>
         <div className='w-3/4'>
           <CalendarSection events={schedulerData} addFunction={addEvent} deleteFunction={deleteEvent} editFunction={editEvent}/>
         </div>

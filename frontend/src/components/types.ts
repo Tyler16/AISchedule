@@ -33,6 +33,7 @@ export interface TodoSectionProps {
   todoItems: ToDoItem[];
   deleteFunction: Function;
   addFunction: Function;
+  autoScheduleFunction: Function;
 }
 
 export interface CalendarSectionProps {

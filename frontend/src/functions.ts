@@ -22,6 +22,13 @@ class Heap {
   }
 }
 
+function compareItems(item1: ToDoItem, item2: ToDoItem) {
+
+}
+
 export function autoSchedule(events: Event[], todoItems: ToDoItem[]) {
-  
+  let today = new Date();
+  console.log(today);
+  console.log(events);
+  console.log(todoItems);
 }
