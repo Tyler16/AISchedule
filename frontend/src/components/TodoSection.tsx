@@ -13,7 +13,7 @@ export default function TodoSection(props: TodoSectionProps) {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form)
-    const convertedObj = {...Object.fromEntries(formData.entries()), uid: user.sub}
+    let convertedObj = {...Object.fromEntries(formData.entries()), uid: user.sub, timeLeft: formData.get("totalTime")}
     props.addFunction(convertedObj)
   }
 

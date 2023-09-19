@@ -10,7 +10,7 @@ class Event(models.Model):
     exDate = models.CharField(max_length=200, null=True, blank=True)
     notes = models.CharField(max_length=200, null=True, blank=True)
     autoScheduled = models.BooleanField(default=False)
-    todoID = models.IntegerField(null=True, blank=True)
+    associatedTodo = models.IntegerField(null=True, blank=True)
 
 class TodoItem(models.Model):
     uid = models.CharField(max_length=128)

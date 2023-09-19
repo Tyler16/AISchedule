@@ -5,11 +5,23 @@ export interface ToDoItem {
   category: number;
   dueDate: Date;
   totalTime: number;
-  timeLeft?: number;
+  timeLeft: number;
 };
 
 export interface Event {
   id:number;
+  title: string;
+  startDate: string;
+  endDate: string;
+  allDay: boolean;
+  rRule?: string;
+  exDate?: string;
+  notes?: string;
+  autoScheduled: boolean;
+  associatedTodo?: number;
+};
+
+export interface EventNoID {
   title: string;
   startDate: Date;
   endDate: Date;
@@ -17,7 +29,9 @@ export interface Event {
   rRule?: string;
   exDate?: string;
   notes?: string;
-};
+  autoScheduled: boolean;
+  associatedTodo?: number;
+}
 
 export interface TodoItemProps {
   item: ToDoItem;

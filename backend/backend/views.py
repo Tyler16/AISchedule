@@ -15,6 +15,7 @@ def event_create(request):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
+            print(serializer.errors)
             return Response(serializer.errors)
 # Return list of events by user
 @api_view(['GET'])
@@ -47,8 +48,7 @@ def todo_create(request):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
-            print(serializer.error)
-            return Response(serializer.error)
+            return Response(serializer.errors)
 
 # Return todolist by uid
 @api_view(['GET'])

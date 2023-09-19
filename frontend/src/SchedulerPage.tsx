@@ -10,19 +10,18 @@ export default function SchedulerPage() {
   let [todoItems, setTodoItems] = useState<ToDoItem[]>([]);
   let [schedulerData, setSchedulerData] = useState<Event[]>([]);
   let { user } = useAuth0();
-
+  let apiUrl = import.meta.env.VITE_API_URL;
   useEffect(() => {
     if (user === undefined) {
       return;
     }
-    fetch(`http://localhost:8000/todo/${user.sub}`)
+    fetch(`${apiUrl}/todo/${user.sub}`)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setTodoItems(data.TodoList);
       })
       .catch((err) => console.log(err.message));
-    fetch(`http://localhost:8000/event/${user.sub}`)
+    fetch(`${apiUrl}/event/${user.sub}`)
       .then((response) => response.json())
       .then((data) => {
         setSchedulerData(data.Event)
@@ -32,7 +31,7 @@ export default function SchedulerPage() {
   }, []);
 
   async function deleteItem(id:number) {
-    await fetch(`http://localhost:8000/todo/mod/${id}`, {
+    await fetch(`${apiUrl}/todo/mod/${id}`, {
       method: 'DELETE',
     })
     .then((response => {
@@ -47,8 +46,7 @@ export default function SchedulerPage() {
   }
 
   async function addItem(item: ToDoItem) {
-    console.log(item)
-    fetch('http://localhost:8000/todo/', { method: "POST",
+    fetch(`${apiUrl}/todo/`, { method: "POST",
                                            body: JSON.stringify(item),
                                            headers: {
                                             'Content-type': 'application/json; charset=UTF-8',
@@ -62,7 +60,8 @@ export default function SchedulerPage() {
   }
 
   const addEvent = async (body:any) => {
-    await fetch('http://localhost:8000/event/', {
+    console.log(body)
+    await fetch(`${apiUrl}/event/`, {
       method: 'POST',
       body: JSON.stringify(body),
       headers: {
@@ -79,7 +78,7 @@ export default function SchedulerPage() {
   };
 
   const deleteEvent = async (id:number) => {
-    await fetch(`http://localhost:8000/event/mod/${id}`, {
+    await fetch(`${apiUrl}/event/mod/${id}`, {
       method: 'DELETE',
     })
     .then((response => {
@@ -94,8 +93,7 @@ export default function SchedulerPage() {
   }
 
   const editEvent = async (id:number, body:any) => {
-    console.log(schedulerData);
-    await fetch(`http://localhost:8000/event/mod/${id}`, {
+    await fetch(`${apiUrl}/event/mod/${id}`, {
       method: 'PUT',
       body: JSON.stringify(body),
       headers: {
@@ -116,7 +114,27 @@ export default function SchedulerPage() {
   }
 
   function autoscheduleClicked() {
-    autoSchedule(schedulerData, todoItems);
+    let prevEvents = schedulerData.filter((event) => event.autoScheduled);
+    while (prevEvents.length > 0) {
+      let removedEvent = prevEvents.pop();
+      if (removedEvent == undefined) {
+        break;
+      }
+      deleteEvent(removedEvent.id);
+    }
+    let newEvents = autoSchedule(schedulerData.filter((event) => !event.autoScheduled), todoItems);
+    console.log(newEvents)
+    while (newEvents.length > 0) {
+      let addedEvent = newEvents.pop();
+      console.log(addedEvent);
+      if (addedEvent == undefined) {
+        continue;
+      }
+      if (user == undefined) {
+        return
+      }
+      addEvent({...addedEvent, uid: user.sub});
+    }
   }
 
   return (
