@@ -74,7 +74,13 @@ export function autoSchedule(events: Event[], todoItems: ToDoItem[]): EventNoID[
   let modifiedItems: ToDoItem[] = [];
   while (nextHour.getHours() < 23) {
     let timeBlockEvents: Event[] = todayEvents.filter((event) => new Date(Date.parse(event.startDate)) >= nextHour &&
-                                                        new Date(Date.parse(event.startDate)) <= addMinutes(nextHour, 60));
+                                                        new Date(Date.parse(event.startDate)) <= addMinutes(nextHour, 60) || 
+                                                        new Date(Date.parse(event.endDate)) >= nextHour &&
+                                                        new Date(Date.parse(event.endDate)) <= addMinutes(nextHour, 60) ||
+                                                        new Date(Date.parse(event.startDate)) <= nextHour &&
+                                                        new Date(Date.parse(event.endDate)) >= nextHour ||
+                                                        new Date(Date.parse(event.startDate)) <= addMinutes(nextHour, 60) &&
+                                                        new Date(Date.parse(event.endDate)) >= addMinutes(nextHour, 60));
     if (timeBlockEvents.length == 0) {
       let currentItem: ToDoItem | null = heap.heappop()
       if (currentItem == null) {
