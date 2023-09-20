@@ -1,6 +1,6 @@
 <h1>AutoSchedule</h1>
 AutoSchedule is a school scheduling application that will allow for automatic scheduling of assignments each day. It combines a calendar and a todolist, allowing for ease of scheduling.
-
+<h2>Demo Video</h2>
 
 https://github.com/Tyler16/AutoSchedule/assets/31872040/700eb73b-1efd-4897-9dcb-5f5c41d27059
 
