@@ -11,9 +11,20 @@ export default function SchedulerPage() {
   let [schedulerData, setSchedulerData] = useState<Event[]>([]);
   let { user } = useAuth0();
   let apiUrl = import.meta.env.VITE_API_URL;
-  useEffect(() => {
+  async function getEvents() {
     if (user === undefined) {
-      return;
+      return
+    }
+    await fetch(`${apiUrl}/event/${user.sub}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setSchedulerData(data.Event)
+      })
+      .catch((err) => console.log(err.message));
+  }
+  async function getTodo() {
+    if (user === undefined) {
+      return
     }
     fetch(`${apiUrl}/todo/${user.sub}`)
       .then((response) => response.json())
@@ -21,13 +32,10 @@ export default function SchedulerPage() {
         setTodoItems(data.TodoList);
       })
       .catch((err) => console.log(err.message));
-    fetch(`${apiUrl}/event/${user.sub}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setSchedulerData(data.Event)
-      })
-      .catch((err) => console.log(err.message));
-      
+  }
+  useEffect(() => {
+    getTodo()
+    getEvents()  
   }, []);
 
   async function deleteItem(id:number) {
@@ -46,7 +54,7 @@ export default function SchedulerPage() {
   }
 
   async function addItem(item: ToDoItem) {
-    fetch(`${apiUrl}/todo/`, { method: "POST",
+    await fetch(`${apiUrl}/todo/`, { method: "POST",
                                            body: JSON.stringify(item),
                                            headers: {
                                             'Content-type': 'application/json; charset=UTF-8',
@@ -60,7 +68,6 @@ export default function SchedulerPage() {
   }
 
   const addEvent = async (body:any) => {
-    console.log(body)
     await fetch(`${apiUrl}/event/`, {
       method: 'POST',
       body: JSON.stringify(body),
@@ -74,7 +81,6 @@ export default function SchedulerPage() {
     }).catch((err) => {
       console.log(err.message);
     });
-    
   };
 
   const deleteEvent = async (id:number) => {
@@ -135,6 +141,7 @@ export default function SchedulerPage() {
       }
       addEvent({...addedEvent, uid: user.sub});
     }
+    getEvents();
   }
 
   return (

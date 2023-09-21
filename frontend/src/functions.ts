@@ -69,7 +69,7 @@ export function autoSchedule(events: Event[], todoItems: ToDoItem[]): EventNoID[
                                               (new Date(Date.parse(event.startDate))).getMonth() == today.getMonth() &&
                                               (new Date(Date.parse(event.startDate))).getFullYear() == today.getFullYear());
   let nextHour: Date = new Date(today.getFullYear(), today.getMonth(), today.getDate(), today.getHours() + 1, 0, 0, 0);
-  let heap: Heap = new Heap(todoItems, today);
+  let heap: Heap = new Heap(todoItems.map(item => ({...item})), today);
   let newEvents: EventNoID[] = [];
   let modifiedItems: ToDoItem[] = [];
   while (nextHour.getHours() < 23) {

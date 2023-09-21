@@ -136,11 +136,11 @@ CORS_ALLOWED_ORIGINS = [
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv("PG_NAME"),
-        'USER': os.getenv("PG_USER"),
-        'PASSWORD': os.getenv("PG_PASSWORD"),
-        'HOST': os.getenv("PG_HOST"),
-        'PORT': os.getenv("PG_PORT"),
+        'NAME': "gdisdcca",
+        'USER': "gdisdcca",
+        'PASSWORD': "uyUgUPOkf0j0t_AGIVzrT6N3frjapMLR",
+        'HOST': "berry.db.elephantsql.com",
+        'PORT': "5432",
     }
 }
 
